@@ -17,7 +17,8 @@ export const users: AppUser[] = [
     uid: 'jane-id',
     displayName: 'Jane',
     email: 'jane@test.com',
-    photoURL: 'https://randomuser.me/api/portraits/women/8.jpg',
+    photoURL:
+      'https://imgs.search.brave.com/1CuYTeHLPCr2jTY69QQ1TK1HxgLAnOseNj5wv3z05Do/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvMTMw/OTQwNTEwNS9waG90/by9iZWF1dHktcG9y/dHJhaXQtb2YteW91/bmctYnJ1bmV0dGUu/anBnP3M9NjEyeDYx/MiZ3PTAmaz0yMCZj/PXFUTWI1aGI0SHU1/UTlpX2tJQm9qRGYz/SFJyQklwaDdIeUtE/elU0SUo5TEk9',
   },
 ];
 
