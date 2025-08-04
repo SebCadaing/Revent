@@ -1,8 +1,8 @@
-import { Fragment } from 'react/jsx-runtime';
-import { useAppSelector } from '../../../lib/stores/store';
+import { Fragment } from "react/jsx-runtime";
 
-export default function EventDetailedSidebar() {
-  const event = useAppSelector((state) => state.event.selectedEvent);
+import type { AppEvent } from "../../../lib/types";
+
+export default function EventDetailedSidebar({ event }: { event: AppEvent }) {
   return (
     <div className="card bg-base-100">
       <div
@@ -19,21 +19,14 @@ export default function EventDetailedSidebar() {
                 <div className="flex gap-3 items-center ">
                   <div className="avatar">
                     <div className="w-16 rounded">
-                      <img
-                        src={attendee.photoURL || '/public/user.png'}
-                        alt="user avatar"
-                      />
+                      <img src={attendee.photoURL || "/public/user.png"} alt="user avatar" />
                     </div>
                   </div>
                   <span className="text-2xl">{attendee.displayName}</span>
                 </div>
-                {event.hostUid === attendee.id && (
-                  <div className="badge badge-info">Host</div>
-                )}
+                {event.hostUid === attendee.id && <div className="badge badge-info">Host</div>}
               </div>
-              {index < event.attendees.length - 1 && (
-                <div className="divider my-0"> </div>
-              )}
+              {index < event.attendees.length - 1 && <div className="divider my-0"> </div>}
             </Fragment>
           ))}
         </div>

@@ -1,32 +1,26 @@
-import { useParams } from 'react-router';
-import { useAppDispatch } from '../../../lib/stores/store';
-import EventDetailedChat from './EventDetailedChat';
-import EventDetailedHeader from './EventDetailedHeader';
-import EventDetailedInfo from './EventDetailedInfo';
-import EventDetailedSidebar from './EventDetailedSidebar';
-import { useEffect } from 'react';
-import { selectEvent } from '../eventSlice';
+import { useParams } from "react-router";
+import EventDetailedChat from "./EventDetailedChat";
+import EventDetailedHeader from "./EventDetailedHeader";
+import EventDetailedInfo from "./EventDetailedInfo";
+import EventDetailedSidebar from "./EventDetailedSidebar";
+import { useDocument } from "../../../lib/hooks/useDocument";
+import type { AppEvent } from "../../../lib/types";
 
 export default function EventDetails() {
-  const dispatch = useAppDispatch();
   const { id } = useParams<{ id: string }>();
-  useEffect(() => {
-    if (id) {
-      dispatch(selectEvent(id));
-    }
-    return () => {
-      dispatch(selectEvent(null)); // Clear selected event on unmount
-    };
-  }, [id, dispatch]);
+  const { data: selectedEvent, loading } = useDocument<AppEvent>({ path: "events", id });
+
+  if (loading) return <div>loading....</div>;
+  if (!selectedEvent) return <div>event not found</div>;
   return (
     <div className="flex gap-4 w-full">
       <div className="flex flex-col w-2/3 gap-3">
-        <EventDetailedHeader />
-        <EventDetailedInfo />
+        <EventDetailedHeader event={selectedEvent} />
+        <EventDetailedInfo event={selectedEvent} />
         <EventDetailedChat />
       </div>
       <div className="w-1/3">
-        <EventDetailedSidebar />
+        <EventDetailedSidebar event={selectedEvent} />
       </div>
     </div>
   );

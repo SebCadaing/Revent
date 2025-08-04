@@ -21,4 +21,4 @@ export const eventFormSchema = z.object({
   venue: venueSchema,
 });
 
-export type eventFormSchema = z.infer<typeof eventFormSchema>;
+export type EventFormSchema = z.infer<typeof eventFormSchema>;

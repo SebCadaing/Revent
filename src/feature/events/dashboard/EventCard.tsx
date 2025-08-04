@@ -1,6 +1,6 @@
-import { Link } from 'react-router';
-import type { AppEvent } from '../../../lib/types';
-import EventAttendees from './EventAttendees';
+import { Link } from "react-router";
+import type { AppEvent } from "../../../lib/types";
+import EventAttendees from "./EventAttendees";
 
 type Props = {
   event: AppEvent;
@@ -14,13 +14,11 @@ export default function EventCard({ event }: Props) {
       <div className="card-body">
         <div className="flex items-center gap-4">
           <figure className="card-figure w-14 rounded-lg">
-            <img src={host?.photoURL || '/public/user.png'} alt="user-avatar" />
+            <img src={host?.photoURL || "/public/user.png"} alt="user-avatar" />
           </figure>
           <div>
             <h2 className="card-title">{event.title}</h2>
-            <p className="text-sm text-neutral">
-              Hosted by {host?.displayName}
-            </p>
+            <p className="text-sm text-neutral">Hosted by {host?.displayName}</p>
           </div>
         </div>
 

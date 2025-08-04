@@ -1,19 +1,13 @@
-import { Link } from 'react-router';
-import { useAppSelector } from '../../../lib/stores/store';
+import { Link } from "react-router";
+import type { AppEvent } from "../../../lib/types";
 
-export default function EventDetailedHeader() {
-  const event = useAppSelector((state) => state.event.selectedEvent);
-  if (!event) return <div>Event Not Found</div>;
+export default function EventDetailedHeader({ event }: { event: AppEvent }) {
   const host = event.attendees.find((x) => x.id === event.hostUid);
 
   return (
     <div className="card bg-base-100">
       <figure className="h-64 brightness-50 rounded-lg">
-        <img
-          src={`/public/categoryImages/${event.category}.jpg`}
-          alt="event category image"
-          className="w-full object-cover"
-        />
+        <img src={`/public/categoryImages/${event.category}.jpg`} alt="event category image" className="w-full object-cover" />
       </figure>
       <div
         className="card-body text-white justifly-end absolute 
