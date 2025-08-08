@@ -1,15 +1,15 @@
-import { CalendarIcon, PowerIcon, UserIcon } from '@heroicons/react/24/outline';
-import { useAppDispatch, useAppSelector } from '../../../lib/stores/store';
-import { signOut } from '../../../feature/account/accountSlice';
-import { useNavigate } from 'react-router';
+import { CalendarIcon, PowerIcon, UserIcon } from "@heroicons/react/24/outline";
+import { useAppSelector } from "../../../lib/stores/store";
+import { useNavigate } from "react-router";
+import { signOut } from "firebase/auth";
+import { auth } from "../../../lib/firebase/firebase";
 
 export default function UserMenu() {
   const user = useAppSelector((state) => state.account.user);
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const handleSignout = () => {
-    dispatch(signOut());
-    navigate('/');
+  const handleSignout = async () => {
+    await signOut(auth);
+    navigate("/");
   };
   return (
     <div className="dropdown dropdown-end">
@@ -21,18 +21,12 @@ export default function UserMenu() {
       >
         <div className="avatar">
           <div className="w-11 rounded-full">
-            <img
-              src={user?.photoURL || '/public/user.png'}
-              alt=" user avatar"
-            />
+            <img src={user?.photoURL || "/public/user.png"} alt=" user avatar" />
           </div>
         </div>
         <span>{user?.displayName}</span>
       </div>
-      <ul
-        tabIndex={0}
-        className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
-      >
+      <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
         <li>
           <div className="flex items-center gap-3">
             <UserIcon className="size-6" />

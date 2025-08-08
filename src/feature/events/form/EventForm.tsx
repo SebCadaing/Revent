@@ -89,7 +89,7 @@ export default function EventForm() {
         <TextInput control={control} name="title" label="Title" />
 
         <div className="flex gap-3 items-center w-full">
-          <TextInput control={control} name="date" label="Date" type="datetime-local" min={new Date()} />
+          <TextInput control={control} name="date" label="Date" type="datetime-local" />
           <SelectInput control={control} name="category" label="Category" options={categoryOptions} />
         </div>
         <TextArea control={control} name="description" label="Description" rows={3} />
