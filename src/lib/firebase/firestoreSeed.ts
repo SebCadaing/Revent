@@ -27,7 +27,7 @@ async function seedAuthUsers() {
         displayName: user.displayName,
         photoURL: user.photoURL,
         email: user.email,
-        createAt: Timestamp.now(),
+        createdAt: Timestamp.now(),
       });
     } catch (error) {
       console.log(error);

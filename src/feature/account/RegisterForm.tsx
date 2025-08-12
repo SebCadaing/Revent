@@ -10,6 +10,7 @@ import CenteredCard from "../../app/shared/components/CenteredCard";
 import { type RegisterSchema, registerSchema } from "../../lib/schema/registerSchema";
 import { useFirestoreActions } from "../../lib/hooks/useFirestoreActions";
 import { Timestamp } from "firebase/firestore";
+import SocialLogin from "./SocialLogin";
 
 export default function RegisterForm() {
   const { setDocument } = useFirestoreActions({ path: "profiles" });
@@ -48,6 +49,8 @@ export default function RegisterForm() {
           {isSubmitting && <span className="loading loading-spinner"></span>}
           Register
         </button>
+        <div className="divider">OR</div>
+        <SocialLogin />
       </form>
     </CenteredCard>
   );

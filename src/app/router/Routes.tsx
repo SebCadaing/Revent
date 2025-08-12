@@ -6,6 +6,7 @@ import EventDetails from "../../feature/events/details/EventDetails";
 import EventForm from "../../feature/events/form/EventForm";
 import LoginForm from "../../feature/account/LoginForm";
 import RegisterForm from "../../feature/account/RegisterForm";
+import ProfilePage from "../../feature/profiles/ProfilePage";
 
 export const router = createBrowserRouter([
   {
@@ -19,6 +20,7 @@ export const router = createBrowserRouter([
       { path: "createEvent", element: <EventForm /> },
       { path: "login", element: <LoginForm /> },
       { path: "/register", element: <RegisterForm /> },
+      { path: "profiles/:id", element: <ProfilePage /> },
     ],
   },
 ]);

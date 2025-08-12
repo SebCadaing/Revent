@@ -19,7 +19,7 @@ export const accountSlice = createSlice({
       prepare: (user: User) => {
         return {
           payload: {
-            uid: user.email,
+            uid: user.uid,
             email: user.email,
             displayName: user.displayName,
             photoURL: user.photoURL,
