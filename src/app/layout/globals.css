@@ -1,11 +1,11 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 @plugin 'daisyui';
 
 @plugin "daisyui/theme" {
-  name: 'light';
+  name: "light";
   default: false;
   prefersdark: false;
-  color-scheme: 'light';
+  color-scheme: "light";
   --color-base-100: oklch(100% 0 0);
   --color-base-200: oklch(98% 0 0);
   --color-base-300: oklch(95% 0 0);
@@ -38,4 +38,18 @@
 
 a.active {
   @apply text-accent;
+}
+
+@layer components {
+  .bg-grad-primary {
+    @apply rounded-t-lg justify-center bg-gradient-to-r 
+    from-primary to-black text-white;
+  }
+}
+
+.react-calendar {
+  width: 100% !important;
+  border: none !important;
+  padding: 10px;
+  border-radius: 0.5rem;
 }
