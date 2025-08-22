@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { eventSLice } from "../../feature/events/eventSlice";
 import { accountSlice } from "../../feature/account/accountSlice";
 import { firestoreSlice } from "../firebase/firestoreSlice";
+import { followSlice } from "../../feature/profiles/followSlice";
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     event: eventSLice.reducer,
     account: accountSlice.reducer,
     firestore: firestoreSlice.reducer,
+    follow: followSlice.reducer,
   },
 });
 
