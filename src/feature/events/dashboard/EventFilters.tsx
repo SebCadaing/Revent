@@ -27,11 +27,11 @@ export default function EventFilters({ setFilter, filter }: Props) {
   ];
 
   const handleFilterChange = ({ query, startDate }: { query?: string; startDate?: string }) => {
-    if (!currentUser) return;
-    const q: QueryOptions[] = [{ attribute: "date", operator: ">=", value: startDate || new Date().toISOString(), isDate: true }];
-    if (query === "going") {
+    if (!currentUser && query) return;
+    const q: QueryOptions[] = [{ attribute: "date", operator: ">=", value: startDate || filter.startDate, isDate: true }];
+    if (query === "going" && currentUser) {
       q.push({ attribute: "attendeeIds", operator: "array-contains", value: currentUser.uid });
-    } else if (query === "hosting") {
+    } else if (query === "hosting" && currentUser) {
       q.push({ attribute: "hostUid", operator: "==", value: currentUser.uid });
     }
 
@@ -45,29 +45,32 @@ export default function EventFilters({ setFilter, filter }: Props) {
         path: "events",
       })
     );
-    setFilter({ ...filter, query: query || "all", startDate: startDate || new Date().toISOString() });
+    setFilter({ ...filter, query: query || "all", startDate: startDate || filter.startDate });
   };
 
   return (
     <div className="flex flex-col gap-4 w-full">
-      <div className="card bg-base-100 w-full rounded-lg">
-        <div className="card-title font-semibold bg-grad-primary">Event Filters</div>
-        <ul className="list  space-y-2 py-2">
-          {items.map(({ key, label, icon: Icon }) => (
-            <li
-              onClick={() => handleFilterChange({ query: key })}
-              className={clsx("list-row w-full items-center py-2 hover:bg-primary/20 cursor-pointer", {
-                "text-primary font-bold": filter.query === key,
-              })}
-              key={key}
-            >
-              <Icon className="w-10 h-10" />
-              <span className="text-lg">{label}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className=" card bg-base-100 w-full rounded-lg">
+      {currentUser && (
+        <div className="card bg-base-100 w-full ">
+          <div className="card-title font-semibold bg-grad-primary">Event Filters</div>
+          <ul className="list  space-y-2 py-2">
+            {items.map(({ key, label, icon: Icon }) => (
+              <li
+                onClick={() => handleFilterChange({ query: key })}
+                className={clsx("list-row w-full items-center py-2 hover:bg-primary/20 cursor-pointer", {
+                  "text-primary font-bold": filter.query === key,
+                })}
+                key={key}
+              >
+                <Icon className="w-10 h-10" />
+                <span className="text-lg">{label}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      <div className=" card bg-base-100 w-full ">
         <div className="card-title bg-grad-primary">Start Date</div>
         <Calendar
           value={new Date(filter.startDate)}

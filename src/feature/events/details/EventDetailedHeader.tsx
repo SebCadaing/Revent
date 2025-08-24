@@ -10,8 +10,8 @@ export default function EventDetailedHeader({ event }: { event: AppEvent }) {
   const { host, isGoing, isHost, toggleAttendance, cancelToggle, shouldShowCountdown } = useEvent(event);
 
   return (
-    <div className="card bg-base-100">
-      <figure className="h-64  rounded-lg">
+    <div className="card bg-base-100 image-full">
+      <figure className="h-64">
         <img src={`/public/categoryImages/${event.category}.jpg`} alt="event category image" className="w-full object-cover brightness-50" />
         {event.isCancelled ? (
           <div className="alert alert-error absolute top-5 right-5">
@@ -38,8 +38,8 @@ export default function EventDetailedHeader({ event }: { event: AppEvent }) {
             <p>{formatDateTime(event.date)}</p>
             <p>Hosted by {host?.displayName}</p>
           </div>
-          <div className="flex flex-col justify-end">
-            <div className="flex gap-3">
+          <div className="flex flex-col justify-end ">
+            <div className="flex gap-3 bottom-5 right-5 absolute">
               {isHost ? (
                 <div className="flex gap-3">
                   <button

@@ -1,5 +1,6 @@
-import Navbar from './nav/Navbar';
-import AnimatedOutlet from '../router/AnimatedOutlet';
+import Navbar from "./nav/Navbar";
+import AnimatedOutlet from "../router/AnimatedOutlet";
+import AuthModal from "../../feature/account/AuthModal";
 
 export default function App() {
   return (
@@ -8,6 +9,7 @@ export default function App() {
       <div className="container mx-auto px-10 mt-24">
         <AnimatedOutlet />
       </div>
+      <AuthModal />
     </div>
   );
 }

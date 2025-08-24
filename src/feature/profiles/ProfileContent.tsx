@@ -70,7 +70,7 @@ export default function ProfileContent({ profile }: { profile: Profile }) {
         <div className=" flex items-center justify-between">
           <div className="card-title text-2xl ml-3 py-1 text-primary">{selected.label}</div>
           {canEdit && (
-            <button onClick={() => setEditMode(!editMode)} className="btn btn-outline btn-primary">
+            <button onClick={() => setEditMode(!editMode)} className="btn btn-outline btn-primary mr-3">
               {editMode ? "Cancel" : "Edit"}
             </button>
           )}
