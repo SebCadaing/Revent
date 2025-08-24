@@ -45,7 +45,7 @@ export default function EventFilters({ setFilter, filter }: Props) {
         path: "events",
       })
     );
-    setFilter({ ...filter, query: query || "all", startDate: startDate || filter.startDate });
+    setFilter({ ...filter, query: query || filter.query, startDate: startDate || filter.startDate });
   };
 
   return (
@@ -56,7 +56,7 @@ export default function EventFilters({ setFilter, filter }: Props) {
           <ul className="list  space-y-2 py-2">
             {items.map(({ key, label, icon: Icon }) => (
               <li
-                onClick={() => handleFilterChange({ query: key })}
+                onClick={() => handleFilterChange({ query: key, startDate: filter.startDate })}
                 className={clsx("list-row w-full items-center py-2 hover:bg-primary/20 cursor-pointer", {
                   "text-primary font-bold": filter.query === key,
                 })}
@@ -77,7 +77,7 @@ export default function EventFilters({ setFilter, filter }: Props) {
           activeStartDate={calendarViewDate}
           onActiveStartDateChange={({ activeStartDate }) => setCalendarViewDate(activeStartDate as Date)}
           onChange={(value) => {
-            handleFilterChange({ startDate: (value as Date).toISOString() });
+            handleFilterChange({ query: filter.query, startDate: (value as Date).toISOString() });
           }}
         />
       </div>
