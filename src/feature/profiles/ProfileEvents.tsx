@@ -1,5 +1,4 @@
-import clsx from "clsx";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Link } from "react-router";
 import { type AppEvent, type CollectionOptions, type Profile } from "../../lib/types";
 import { useAppDispatch } from "../../lib/stores/store";
@@ -7,15 +6,9 @@ import { setCollectionOptions } from "../../lib/firebase/firestoreSlice";
 import { useCollection } from "../../lib/hooks/useCollection";
 import { formatDateTime } from "../../lib/util/util";
 
-export default function ProfileEvents({ profile }: { profile: Profile }) {
-  const [selectedTab, setSelectedTab] = useState("future");
-  const { data: events } = useCollection<AppEvent>({ path: "events" });
+export default function ProfileEvents({ profile, selectedTab }: { profile: Profile; selectedTab: string }) {
+  const { data: events, loading } = useCollection<AppEvent>({ path: "events" });
   const dispatch = useAppDispatch();
-  const tabs = [
-    { id: "future", label: "Future Events" },
-    { id: "past", label: "Past Events" },
-    { id: "hosting", label: "Hosting" },
-  ];
 
   useEffect(() => {
     const optionsMap: Record<string, CollectionOptions> = {
@@ -43,33 +36,27 @@ export default function ProfileEvents({ profile }: { profile: Profile }) {
   }, [dispatch, profile.id, selectedTab]);
 
   return (
-    <div className="flex flex-col w-full h-[64vh">
-      <div className="tabs tabs-border">
-        {tabs.map((tab) => (
-          <a
-            key={tab.id}
-            onClick={() => setSelectedTab(tab.id)}
-            className={clsx("tab", {
-              "tab-active": selectedTab === tab.id,
-            })}
-          >
-            {tab.label}
-          </a>
-        ))}
-      </div>
+    <div className="flex flex-col w-full h-[45vh]">
       <div className="grid grid-cols-3 gap-3 mt-3  overflow-y-auto">
-        {events?.map((event) => (
-          <Link to="/events" key={event.id} className="card bg-base-100 shadow-sm text-white">
-            <figure className="relative">
-              <img src={`/categoryImages/${event.category}.jpg`} alt="category image" className="h-45 w-full object-cover brightness-50 rounded-xl" />
-              <div className="card-title text-2xl absolute top-1 left-3">{event.title}</div>
-              <div className="absolute bottom-1 left-3">
-                <p className="text-lg font-semibold">{event.venue.split(",")[0]}</p>
-                <p className="text-sm ">{formatDateTime(event.date)}</p>
-              </div>
-            </figure>
-          </Link>
-        ))}
+        {!loading && events?.length === 0 && <div>Not Attending any event for this filter</div>}
+
+        {!loading &&
+          events?.map((event) => (
+            <Link to="/events" key={event.id} className="card bg-base-100 shadow-sm text-white">
+              <figure className="relative">
+                <img
+                  src={`/categoryImages/${event.category}.jpg`}
+                  alt="category image"
+                  className="h-45 w-full object-cover brightness-50 rounded-xl"
+                />
+                <div className="card-title text-2xl absolute top-1 left-3">{event.title}</div>
+                <div className="absolute bottom-1 left-3">
+                  <p className="text-lg font-semibold">{event.venue.split(",")[0]}</p>
+                  <p className="text-sm ">{formatDateTime(event.date)}</p>
+                </div>
+              </figure>
+            </Link>
+          ))}
       </div>
     </div>
   );

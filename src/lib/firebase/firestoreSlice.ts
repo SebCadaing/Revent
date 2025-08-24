@@ -27,8 +27,26 @@ export const firestoreSlice = createSlice({
     setError: (state, action: PayloadAction<string | null>) => {
       state.error = action.payload;
     },
-    setCollection: (state, action: PayloadAction<{ path: string; data: unknown[] }>) => {
-      state.collections[action.payload.path] = action.payload.data;
+    setCollection: (state, action: PayloadAction<{ path: string; data: unknown[]; paginate?: boolean }>) => {
+      const { path, data, paginate } = action.payload;
+      if (paginate && (state.options[path]?.pageNumber ?? 1) > 1) {
+        const existing = state.collections[path] ?? [];
+        const map = new Map<string, unknown>();
+
+        for (const item of existing) {
+          if (typeof item === "object" && item && "id" in item) {
+            map.set((item as { id: string }).id, item);
+          }
+        }
+        for (const item of data) {
+          if (typeof item === "object" && item && "id" in item) {
+            map.set((item as { id: string }).id, item);
+          }
+          state.collections[path] = Array.from(map.values());
+        }
+      } else {
+        state.collections[path] = action.payload.data;
+      }
     },
     setDocuments: (state, action: PayloadAction<{ path: string; id: string; data: unknown }>) => {
       if (!state.documents[action.payload.path]) {
@@ -40,7 +58,13 @@ export const firestoreSlice = createSlice({
       const { path, options } = action.payload;
       state.options[path] = { ...state.options[path], ...options };
     },
+    setNextPage: (state, action: PayloadAction<{ path: string }>) => {
+      const { path } = action.payload;
+      if (state.options[path]) {
+        state.options[path].pageNumber = (state.options[path].pageNumber || 1) + 1;
+      }
+    },
   },
 });
 
-export const { setLoading, setError, setCollection, setDocuments, setCollectionOptions } = firestoreSlice.actions;
+export const { setLoading, setError, setCollection, setDocuments, setCollectionOptions, setNextPage } = firestoreSlice.actions;
