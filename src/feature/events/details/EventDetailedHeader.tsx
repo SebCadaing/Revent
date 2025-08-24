@@ -12,7 +12,7 @@ export default function EventDetailedHeader({ event }: { event: AppEvent }) {
   return (
     <div className="card bg-base-100 image-full">
       <figure className="h-64">
-        <img src={`/public/categoryImages/${event.category}.jpg`} alt="event category image" className="w-full object-cover brightness-50" />
+        <img src={`/categoryImages/${event.category}.jpg`} alt="event category image" className="w-full object-cover brightness-50" />
         {event.isCancelled ? (
           <div className="alert alert-error absolute top-5 right-5">
             <XCircleIcon className="h-6 w-6" />
@@ -28,46 +28,42 @@ export default function EventDetailedHeader({ event }: { event: AppEvent }) {
           </>
         )}
       </figure>
-      <div
-        className="card-body text-white justifly-end absolute 
-      bottom-0 w-full"
-      >
-        <div className="flex justify-between">
+      <div className="card-body text-white flex flex-col justify-end">
+        <div className="flex justify-between items-end w-full">
           <div>
             <h2 className="card-title text-4xl">{event.title}</h2>
             <p>{formatDateTime(event.date)}</p>
             <p>Hosted by {host?.displayName}</p>
           </div>
-          <div className="flex flex-col justify-end ">
-            <div className="flex gap-3 bottom-5 right-5 absolute">
-              {isHost ? (
-                <div className="flex gap-3">
-                  <button
-                    onClick={cancelToggle}
-                    className={clsx("btn btn-error", {
-                      "btn-success": event.isCancelled,
-                      "btn-error": !event.isCancelled,
-                    })}
-                  >
-                    {event.isCancelled ? "Reactivate event" : "Cancel Event"}
-                  </button>
-                  <Link to={`/manage/${event.id}`} className="btn btn-primary">
-                    Manage Event
-                  </Link>
-                </div>
-              ) : (
+
+          <div className="flex gap-3">
+            {isHost ? (
+              <>
                 <button
-                  disabled={event.isCancelled}
-                  onClick={toggleAttendance}
+                  onClick={cancelToggle}
                   className={clsx("btn", {
-                    "btn-primary": !isGoing,
-                    "btn-error": isGoing,
+                    "btn-success": event.isCancelled,
+                    "btn-error": !event.isCancelled,
                   })}
                 >
-                  {isGoing ? "Cancel Attendance" : "Join Event"}
+                  {event.isCancelled ? "Reactivate event" : "Cancel Event"}
                 </button>
-              )}
-            </div>
+                <Link to={`/manage/${event.id}`} className="btn btn-primary">
+                  Manage Event
+                </Link>
+              </>
+            ) : (
+              <button
+                disabled={event.isCancelled}
+                onClick={toggleAttendance}
+                className={clsx("btn", {
+                  "btn-primary": !isGoing,
+                  "btn-error": isGoing,
+                })}
+              >
+                {isGoing ? "Cancel Attendance" : "Join Event"}
+              </button>
+            )}
           </div>
         </div>
       </div>
